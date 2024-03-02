@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<command-definition>
+	<command>ant</command>
+	<param id="buildfile">-buildfile</param>
+	<param id="buildfile">{0}</param>
+	<param id="debug">-debug</param>
+	<param id="verbose">-verbose</param>
+	<param id="properties">-D{0}={1}</param>
+	<param id="target">{0}</param>
+</command-definition>

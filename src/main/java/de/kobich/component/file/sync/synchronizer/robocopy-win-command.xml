@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<command-definition>
+	<command>robocopy.exe</command>
+	<param id="task.source">{0}</param>
+	<param id="task.target">{0}</param>
+	<param>/MIR</param>
+</command-definition>

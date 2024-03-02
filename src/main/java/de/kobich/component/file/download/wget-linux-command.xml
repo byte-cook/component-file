@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<command-definition>
+	<command>wget</command>
+	<param>--continue</param>
+	<param id="recursive">--recursive</param>
+	<param id="recursive.level">--level={0}</param>
+	<param id="proxy.user">--user={0}</param>
+	<param id="proxy.password">--password={0}</param>
+	<param id="url">{0}</param>
+	<env id="proxy.http">
+		<key>http_proxy</key>
+		<value>{0}</value>
+	</env>
+</command-definition>
