@@ -166,7 +166,9 @@ public class FileDescriptorService {
 				String relativePath = RelativePathUtils.getParent(fileDescriptor.getRelativePath()) + RelativePathUtils.separator + newFile.getName();
 				
 				FileDescriptor newFileDescriptor = new FileDescriptor(newFile, relativePath);
-				newFileDescriptor.setMetaData(fileDescriptor.getMetaData().clone());
+				if (fileDescriptor.hasMetaData()) {
+					newFileDescriptor.setMetaData(fileDescriptor.getMetaData().clone());
+				}
 				
 				result.removedFileDescriptors.add(fileDescriptor);
 				result.addedFileDescriptors.add(newFileDescriptor);
