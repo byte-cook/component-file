@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import de.kobich.component.file.FileException;
 import de.kobich.component.file.FileResult;
-import de.kobich.component.file.FileResultSupport;
+import de.kobich.component.file.FileResultBuilder;
 
 /**
  * The file I/O service.
@@ -23,14 +23,14 @@ public class FileIOService {
 	 */
 	public FileResult createNewFolders(FilesRequest request) throws FileException {
 		try {
-			FileResultSupport result = new FileResultSupport();
+			FileResultBuilder result = new FileResultBuilder();
 			for (File file : request.getFiles()) {
 				if (!file.exists()) {
 					FileUtils.forceMkdir(file);
 					result.createdFiles.add(file);
 				}
 			}
-			return result.createFileResult();
+			return result.build();
 		}
 		catch (IOException exc) {
 			throw new FileException(FileException.FILE_CREATE_FAILED, exc);
@@ -45,14 +45,14 @@ public class FileIOService {
 	 */
 	public FileResult createNewFiles(FilesRequest request) throws FileException {
 		try {
-			FileResultSupport result = new FileResultSupport();
+			FileResultBuilder result = new FileResultBuilder();
 			for (File file : request.getFiles()) {
 				if (!file.exists()) {
 					file.createNewFile();
 					result.createdFiles.add(file);
 				}
 			}
-			return result.createFileResult();
+			return result.build();
 		}
 		catch (IOException exc) {
 			throw new FileException(FileException.FILE_CREATE_FAILED, exc);
@@ -66,7 +66,7 @@ public class FileIOService {
 	 * @throws FileException
 	 */
 	public FileResult renameFiles(RenameFileRequest request) throws FileException {
-		FileResultSupport result = new FileResultSupport();
+		FileResultBuilder result = new FileResultBuilder();
 		File oldFile = request.getOldFile();
 		File newFile = request.getNewFile();
 
@@ -80,7 +80,7 @@ public class FileIOService {
 				result.deletedFiles.add(oldFile);
 			}
 		}
-		return result.createFileResult();
+		return result.build();
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class FileIOService {
 		}
 
 		try {
-			FileResultSupport result = new FileResultSupport();
+			FileResultBuilder result = new FileResultBuilder();
 			if (FileCreationType.COPY.equals(type)) {
 				FileUtils.copyDirectory(srcDir, destDir);
 				result.createdFiles.add(destDir);
@@ -110,7 +110,7 @@ public class FileIOService {
 				result.createdFiles.add(destDir);
 				result.deletedFiles.add(srcDir);
 			}
-			return result.createFileResult();
+			return result.build();
 		}
 		catch (IOException exc) {
 			throw new FileException(FileException.FILE_COPY_FAILED, exc);
@@ -138,7 +138,7 @@ public class FileIOService {
 		}
 
 		try {
-			FileResultSupport result = new FileResultSupport();
+			FileResultBuilder result = new FileResultBuilder();
 			// copy file
 			if (FileCreationType.COPY.equals(type)) {
 				FileUtils.copyFile(srcFile, destFile);
@@ -150,7 +150,7 @@ public class FileIOService {
 				result.createdFiles.add(destFile);
 				result.deletedFiles.add(srcFile);
 			}
-			return result.createFileResult();
+			return result.build();
 		}
 		catch (IOException exc) {
 			throw new FileException(FileException.FILE_COPY_FAILED, exc);
@@ -165,14 +165,14 @@ public class FileIOService {
 	 */
 	public FileResult deleteFiles(FilesRequest request) throws FileException {
 		try {
-			FileResultSupport result = new FileResultSupport();
+			FileResultBuilder result = new FileResultBuilder();
 			for (File file : request.getFiles()) {
 				if (file.exists()) {
 					FileUtils.forceDelete(file);
 					result.deletedFiles.add(file);
 				}
 			}
-			return result.createFileResult();
+			return result.build();
 		}
 		catch (IOException exc) {
 			throw new FileException(FileException.FILE_DELETE_FAILED, exc);
