@@ -21,7 +21,7 @@ import de.kobich.commons.monitor.progress.ProgressData;
 import de.kobich.commons.monitor.progress.ProgressSupport;
 import de.kobich.commons.utils.RelativePathUtils;
 import de.kobich.component.file.FileDescriptor;
-import de.kobich.component.file.FileDescriptorResultSupport;
+import de.kobich.component.file.FileDescriptorResultBuilder;
 import de.kobich.component.file.FileException;
 
 /**
@@ -91,7 +91,7 @@ public class FileDescriptorService {
 		Renamer.rename(files, renameRules);
 		
 		// rename files
-		FileDescriptorResultSupport result = new FileDescriptorResultSupport();
+		FileDescriptorResultBuilder result = new FileDescriptorResultBuilder();
 		while (true) {
 			// loop as long as either all files are renamed or no more files can be renamed
 			// Necessary if a new file name already exists and the corresponding file will be renamed later.
@@ -121,7 +121,7 @@ public class FileDescriptorService {
 		}
 		
 		progressSupport.monitorEndTask(new ProgressData("Renaming done"));
-		return result.createFileDescriptorResult();
+		return result.build();
 	}
 	
 	/**
@@ -135,7 +135,7 @@ public class FileDescriptorService {
 		ProgressSupport progressSupport = new ProgressSupport(monitor);
 		progressSupport.monitorBeginTask(new ProgressData("Renaming files...", files.size()));
 
-		FileDescriptorResultSupport result = new FileDescriptorResultSupport();
+		FileDescriptorResultBuilder result = new FileDescriptorResultBuilder();
 		List<IFileDescriptorRenameable> fileList = new ArrayList<IFileDescriptorRenameable>(files);
 		Collections.sort(fileList);
 		
@@ -180,7 +180,7 @@ public class FileDescriptorService {
 		}
 		
 		progressSupport.monitorEndTask(new ProgressData("Renaming done"));
-		return result.createFileDescriptorResult();
+		return result.build();
 	}
 
 }

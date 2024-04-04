@@ -8,14 +8,14 @@ import java.util.Set;
 
 import de.kobich.component.file.descriptor.FileDescriptorResult;
 
-public class FileDescriptorResultSupport {
+public class FileDescriptorResultBuilder {
 	public final Set<FileDescriptor> addedFileDescriptors;
 	public final Set<FileDescriptor> removedFileDescriptors;
 	public final Set<FileDescriptor> updatedFileDescriptors;
 	public final Map<FileDescriptor, FileDescriptor> replacedFiles;
 	public final Set<FileDescriptor> failedFileDescriptors;
 	
-	public FileDescriptorResultSupport() {
+	public FileDescriptorResultBuilder() {
 		this.addedFileDescriptors = new HashSet<FileDescriptor>();
 		this.removedFileDescriptors = new HashSet<FileDescriptor>();
 		this.updatedFileDescriptors = new HashSet<FileDescriptor>();
@@ -31,7 +31,7 @@ public class FileDescriptorResultSupport {
 		this.failedFileDescriptors.removeAll(this.replacedFiles.keySet());
 	}
 	
-	public FileDescriptorResult createFileDescriptorResult() {
+	public FileDescriptorResult build() {
 		return new FileDescriptorResult(addedFileDescriptors, removedFileDescriptors, updatedFileDescriptors, replacedFiles, failedFileDescriptors);
 	}
 }
